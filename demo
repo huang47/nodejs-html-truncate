@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var s = require('./stack.js');
+
+for (var i = 0; i < 10; i++) {
+    s.push(i);
+}
+
+console.log(s.pop(), 'pop');
+console.log(s, 'array');
+console.log(s.pop(), 'pop');
+console.log(s, 'array');
+console.log(s.pop(), 'pop');
+console.log(s, 'array');
+console.log(s.pop(), 'pop');
+console.log(s, 'array');
