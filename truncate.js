@@ -11,7 +11,7 @@ module.exports = function (string, maxLength, options) {
         result, index, tag, tail;
 
     while(matches) {
-        matches = /<\/?[^>]*>/g.exec(string);
+        matches = /<\/?\w+(\s+\w+="[^"]*")*>/g.exec(string);
         if ( ! matches) { break; }
         result = matches[0];
         index = matches.index;
