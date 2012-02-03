@@ -13,6 +13,18 @@ Stack.prototype = {
 
     pop: function () {
         return this.items.pop();
+    },
+    
+    dumpCloseTag: function () {
+        var html = '',
+            i, len, tag;
+
+        for(i = 0, len = this.size(); i < len; ++i) {
+            tag = this.pop();
+            html += '</' + tag.tag + '>';
+        }
+        
+        return html;
     }
 };
 
