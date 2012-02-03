@@ -6,16 +6,32 @@ var tests = [
     {
         html: '<p><div>hello world</div></p>',
         maxLength: 5
-    },
-    {
+    }, {
         html: '<p><div>Do you <b>think</b> it is useful</div></p>',
         maxLength: 10
+    }, {
+        html: '<b class="yui3-highlight">Zooey</b> Deschanel embodies quirky cute and she is quickly becoming America\'s sweetheart. <b class="yui3-highlight">Here</b> are some of the "New Girl" star\'s best looks and information on w<b class="yui3-highlight">here</b> you can buy them',
+        maxLength: 100
+    }, {
+        html: '<div class="res sc" id="news_cluster"><div class="news_mix"><div class="news_text"><a href="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdDTQtDMD;_ylu=X3oDMTEzb3FxaW0zBHBvcwMyBHNlYwNzcgRjb2xvA3NwMgR2dGlkA1VTTklDN18y/SIG=12s06lheg/EXP=1328323386/**http%3a//news.yahoo.com/obama-pushes-veterans-jobs-programs-165818778.html" class="yschttl spt" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdDTQtDMD;_ylu=X3oDMTEzb3FxaW0zBHBvcwMyBHNlYwNzcgRjb2xvA3NwMgR2dGlkA1VTTklDN18y/SIG=12s06lheg/EXP=1328323386/**http%3a//news.yahoo.com/obama-pushes-veterans-jobs-programs-165818778.html"><b>Obama</b> pushes for veterans jobs programs</a><div class="snip"><span>In an effort to cut the unemployment rate among veterans, President Barack <b>Obama</b> is calling for a new conservation program that would put veterans to work rebuilding trails, roads and levees on public lands.</span></div><div class="source"><span><b>Associated Press via Yahoo! News - 54 minutes ago</b></span></div><ul class="stories"><li><a href="http://news.yahoo.com/obama-congress-dont-muck-recovery-175036839.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdTTQtDMD;_ylu=X3oDMTE1aGJsOG9pBHBvcwMyLjEEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12q0b2d6u/EXP=1328323386/**http%3a//news.yahoo.com/obama-congress-dont-muck-recovery-175036839.html"> <b>Obama</b> to Congress : don\'t \'muck up\' recovery</a><span class="sim_source"> - AFP via Yahoo! News</span></li><li><a href="http://news.yahoo.com/obama-says-policies-extension-faith-202259370.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdjTQtDMD;_ylu=X3oDMTE1Y25tNnZ2BHBvcwMyLjIEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12sd0ur8u/EXP=1328323386/**http%3a//news.yahoo.com/obama-says-policies-extension-faith-202259370.html"> <b>Obama</b> says his policies are extension of h...</a><span class="sim_source"> - Associated Press via Yahoo! News</span></li><li><a href="http://news.yahoo.com/obama-economic-recovery-speeding-164051167.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdzTQtDMD;_ylu=X3oDMTE1cWx1dGloBHBvcwMyLjMEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12pmq6h9t/EXP=1328323386/**http%3a//news.yahoo.com/obama-economic-recovery-speeding-164051167.html"> <b>Obama</b>: Economic recovery speeding up</a><span class="sim_source"> - Associated Press via Yahoo! News</span></li><li class="more_stories"><a href="http://news.search.yahoo.com/search;_ylt=A2KJjam6KixPXHwAeDTQtDMD?p=obama&amp;fr=sfp&amp;tmpl=USNIC7&amp;clid=UqJpXLdI4hEinwkE2loGUpbI">all 94 news articlesâ¦</a></li></ul></div></div></div>',
+        maxLength: 200
     }
 ];
 var test, i, len;
 
+// test round 1
 for (i = 0, len = tests.length; i < len; i++) {
     test = tests[i];
-    console.log(test.html, 'original');
-    console.log(truncate(test.html, test.maxLength), 'truncate');
+    console.log("original");
+    console.log(test.html);
+    console.log("truncate");
+    console.log(truncate(test.html, test.maxLength));
+}
+
+// test round 2
+var src = '<div class="res sc" id="news_cluster"><div class="news_mix"><div class="news_text"><a href="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdDTQtDMD;_ylu=X3oDMTEzb3FxaW0zBHBvcwMyBHNlYwNzcgRjb2xvA3NwMgR2dGlkA1VTTklDN18y/SIG=12s06lheg/EXP=1328323386/**http%3a//news.yahoo.com/obama-pushes-veterans-jobs-programs-165818778.html" class="yschttl spt" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdDTQtDMD;_ylu=X3oDMTEzb3FxaW0zBHBvcwMyBHNlYwNzcgRjb2xvA3NwMgR2dGlkA1VTTklDN18y/SIG=12s06lheg/EXP=1328323386/**http%3a//news.yahoo.com/obama-pushes-veterans-jobs-programs-165818778.html"><b>Obama</b> pushes for veterans jobs programs</a><div class="snip"><span>In an effort to cut the unemployment rate among veterans, President Barack <b>Obama</b> is calling for a new conservation program that would put veterans to work rebuilding trails, roads and levees on public lands.</span></div><div class="source"><span><b>Associated Press via Yahoo! News - 54 minutes ago</b></span></div><ul class="stories"><li><a href="http://news.yahoo.com/obama-congress-dont-muck-recovery-175036839.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdTTQtDMD;_ylu=X3oDMTE1aGJsOG9pBHBvcwMyLjEEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12q0b2d6u/EXP=1328323386/**http%3a//news.yahoo.com/obama-congress-dont-muck-recovery-175036839.html"> <b>Obama</b> to Congress : don\'t \'muck up\' recovery</a><span class="sim_source"> - AFP via Yahoo! News</span></li><li><a href="http://news.yahoo.com/obama-says-policies-extension-faith-202259370.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdjTQtDMD;_ylu=X3oDMTE1Y25tNnZ2BHBvcwMyLjIEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12sd0ur8u/EXP=1328323386/**http%3a//news.yahoo.com/obama-says-policies-extension-faith-202259370.html"> <b>Obama</b> says his policies are extension of h...</a><span class="sim_source"> - Associated Press via Yahoo! News</span></li><li><a href="http://news.yahoo.com/obama-economic-recovery-speeding-164051167.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdzTQtDMD;_ylu=X3oDMTE1cWx1dGloBHBvcwMyLjMEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12pmq6h9t/EXP=1328323386/**http%3a//news.yahoo.com/obama-economic-recovery-speeding-164051167.html"> <b>Obama</b>: Economic recovery speeding up</a><span class="sim_source"> - Associated Press via Yahoo! News</span></li><li class="more_stories"><a href="http://news.search.yahoo.com/search;_ylt=A2KJjam6KixPXHwAeDTQtDMD?p=obama&amp;fr=sfp&amp;tmpl=USNIC7&amp;clid=UqJpXLdI4hEinwkE2loGUpbI">all 94 news articlesâ¦</a></li></ul></div></div></div>'
+for (i = 1, max = 10; i < max; i++) {
+    testLen = i * 50;
+    console.log("truncate : " + testLen);
+    console.log(truncate(src, testLen));
 }
