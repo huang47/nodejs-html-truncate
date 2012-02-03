@@ -1,7 +1,10 @@
 var stack = require('./stack.js');
 
-
-module.exports = function (string, maxLength) {
+/**
+ * HTML-Truncate Utility
+ * This utility truncates html text and keep tag safe(close properly)
+ */
+module.exports = function (string, maxLength, options) {
     var content = '',       // traced text
         total = 0,          // record how many characters we traced so far
         matches = true,

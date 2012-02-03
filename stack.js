@@ -15,6 +15,9 @@ Stack.prototype = {
         return this.items.pop();
     },
     
+    /**
+     * dump all close tags and append to truncated content while reaching upperbound
+     */
     dumpCloseTag: function () {
         var html = '',
             i, len, tag;
