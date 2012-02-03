@@ -1,0 +1,19 @@
+{
+  "author": "huang47 <huge.huang@gmail.com> (http://huang47.blogspot.com)",
+  "name": "html-truncate",
+  "description": "truncate html text and keep tag safe",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/huang47/nodejs-html-truncate.git"
+  },
+  "scripts": {
+    "test": "./demo"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {}
+}

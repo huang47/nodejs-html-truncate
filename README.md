@@ -13,3 +13,6 @@ output HTML <p><div>hello</div></p>
 `truncate(string, 10) =======> '<p><div>Do you <b>thi</b></div></p>'`
 
 output HTML <p><div>Do you <b>thi</b></div></p>
+
+## demo
+./demo
