@@ -16,3 +16,8 @@ output HTML <p><div>Do you <b>thi</b></div></p>
 
 ## demo
 ./demo
+
+## npm package
+npm install [html-truncate][1]
+
+[1]: http://search.npmjs.org/#/html-truncate
