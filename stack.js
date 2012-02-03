@@ -12,7 +12,7 @@ Stack.prototype = {
     },
 
     pop: function () {
-        return this.items.splice(0, 1);
+        return this.items.pop();
     }
 };
 
