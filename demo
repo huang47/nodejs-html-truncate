@@ -40,8 +40,17 @@ for (i = 1, max = 10; i < max; i++) {
 
 // test round 3
 // non-closed tag such as <img>
-var src = '<div class="res sc" id="news_cluster"><div class="news_mix"><div class="news_text"><a href="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdDTQtDMD;_ylu=X3oDMTEzb3FxaW0zBHBvcwMyBHNlYwNzcgRjb2xvA3NwMgR2dGlkA1VTTklDN18y/SIG=12s06lheg/EXP=1328323386/**http%3a//news.yahoo.com/obama-pushes-veterans-jobs-programs-165818778.html" class="yschttl spt" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdDTQtDMD;_ylu=X3oDMTEzb3FxaW0zBHBvcwMyBHNlYwNzcgRjb2xvA3NwMgR2dGlkA1VTTklDN18y/SIG=12s06lheg/EXP=1328323386/**http%3a//news.yahoo.com/obama-pushes-veterans-jobs-programs-165818778.html"><b>Obama</b> pushes for veterans jobs programs</a><div class="snip"><span>In an effort to cut the unemployment rate among veterans, President Barack <b>Obama</b> is calling for a new conservation program that would put veterans to work rebuilding trails, roads and levees on public lands.</span></div><div class="source"><span><b>Associated Press via Yahoo! News - 54 minutes ago</b></span></div><ul class="stories"><li><a href="http://news.yahoo.com/obama-congress-dont-muck-recovery-175036839.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdTTQtDMD;_ylu=X3oDMTE1aGJsOG9pBHBvcwMyLjEEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12q0b2d6u/EXP=1328323386/**http%3a//news.yahoo.com/obama-congress-dont-muck-recovery-175036839.html"> <b>Obama</b> to Congress : don\'t \'muck up\' recovery</a><span class="sim_source"> - AFP via Yahoo! News</span></li><li><a href="http://news.yahoo.com/obama-says-policies-extension-faith-202259370.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdjTQtDMD;_ylu=X3oDMTE1Y25tNnZ2BHBvcwMyLjIEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12sd0ur8u/EXP=1328323386/**http%3a//news.yahoo.com/obama-says-policies-extension-faith-202259370.html"> <b>Obama</b> says his policies are extension of h...</a><span class="sim_source"> - Associated Press via Yahoo! News</span></li><li><a href="http://news.yahoo.com/obama-economic-recovery-speeding-164051167.html" class="news_heading" dirtyhref="http://rds.yahoo.com/_ylt=A2KJjam6KixPXHwAdzTQtDMD;_ylu=X3oDMTE1cWx1dGloBHBvcwMyLjMEc2VjA3NyBGNvbG8Dc3AyBHZ0aWQDVVNOSUM3XzI-/SIG=12pmq6h9t/EXP=1328323386/**http%3a//news.yahoo.com/obama-economic-recovery-speeding-164051167.html"> <b>Obama</b>: Economic recovery speeding up</a><span class="sim_source"> - Associated Press via Yahoo! News</span></li><li class="more_stories"><a href="http://news.search.yahoo.com/search;_ylt=A2KJjam6KixPXHwAeDTQtDMD?p=obama&amp;fr=sfp&amp;tmpl=USNIC7&amp;clid=UqJpXLdI4hEinwkE2loGUpbI">all 94 news articlesâ¦</a></li></ul></div></div></div>'
+// TODO: add removeImageTag option
+var src = '<p class="hello"><img src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo logo"><h3>Yahoooooooooooooooo!</h3></p>'
+console.log("original");
+console.log(src);
+console.log("truncate");
+console.log(truncate(src, 5));
 
 // test round 4
 // special cases
-var src = '<div class="hello" id="hello > world"></div>';
+var src = '<div class="hello" id="hello > world">Hello World</div>';
+console.log("original");
+console.log(src);
+console.log("truncate");
+console.log(truncate(src, 5));
