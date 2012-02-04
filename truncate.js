@@ -10,6 +10,7 @@ module.exports = function (string, maxLength, options) {
         matches = true,
         result, index, tag, tail;
 
+    
     while(matches) {
         matches = /<\/?\w+(\s+\w+="[^"]*")*>/g.exec(string);
         if ( ! matches) { break; }
