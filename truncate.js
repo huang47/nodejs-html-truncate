@@ -18,6 +18,10 @@ module.exports.truncate = function (string, maxLength, options) {
       , items = []                      // stack for saving tags
       , total = 0                       // record how many characters we traced so far
       , content = EMPTY_STRING          // truncated text storage
+      , KEY_VALUE_REGEX = '(\\w+\\s*=\\s*"[^"]*"\\s*)*'
+      , SELF_CLOSE_REGEX = '\\s*\\/?\\s*'
+      , HTML_TAG_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + SELF_CLOSE_REGEX + '>')
+      , IMAGE_TAG_REGEX = new RegExp('<img\\s*' + KEY_VALUE_REGEX + SELF_CLOSE_REGEX + '>')
       , matches = true
       , result, index, tail, tag;
 
@@ -26,29 +30,28 @@ module.exports.truncate = function (string, maxLength, options) {
      * helper to dump all close tags and append to truncated content while reaching upperbound
      */
     var _removeImageTag = function (string) {
-        var match = /<img\s*(\w+\s*=\s*"[^"]*"\s*)*>/g.exec(string),
-            index, len;
+        var match = IMAGE_TAG_REGEX.exec(string)
+          , index, len;
 
         if ( ! match) {
             return string;
         }
 
-        index = match.index,
+        index = match.index;
         len = match[0].length;
-        return [string.substring(0, index), string.substring(index + len)].join(EMPTY_STRING);
+        return string.substring(0, index) + string.substring(index + len);
     }
 
     /**
      * @private
      * helper to dump all close tags and append to truncated content while reaching upperbound
      */
-    var _dumpCloseTag = function (items) {
-        var excludeTags = EXCLUDE_TAGS.toString(),
-            html = '';
+    var _dumpCloseTag = function (tags) {
+        var html = '';
 
-        items.reverse().forEach(function (tag, index) {
+        tags.reverse().forEach(function (tag, index) {
             // dump non-excluded tags only
-            if (-1 === tag.indexOf(excludeTags)) {
+            if (-1 === EXCLUDE_TAGS.indexOf(tag)) {
                 html += '</' + tag + '>';
             }
         });
@@ -63,8 +66,14 @@ module.exports.truncate = function (string, maxLength, options) {
     var _getTag = function (string) {
         var tail = string.indexOf(' ');
 
+        // super ugly implementation
+        // TODO: 
+        // we have to figure out how to handle non-well-formed HTML case
         if (-1 === tail) {
             tail = string.indexOf('>');
+            if (-1 === tail) {
+                console.log('HTML tag is not well-formed : ' + string);
+            }
         }
 
         return string.substring(1, tail);
@@ -74,7 +83,7 @@ module.exports.truncate = function (string, maxLength, options) {
     options.ellipsis = options.ellipsis || '...';
 
     while(matches) {
-        matches = /<\/?\w+\s*(\w+\s*=\s*"[^"]*"\s*)*>/g.exec(string);
+        matches = HTML_TAG_REGEX.exec(string);
 
         if ( ! matches) {
             if (total < maxLength) {
