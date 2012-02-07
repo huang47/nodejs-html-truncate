@@ -4,15 +4,30 @@ To create a library ease to truncate HTML text and keep tag safe
 ## example
 `var string = '<p><div>hello world</div></p>';`
 
-`truncate(string, 5) =======> '<p><div>hello</div></p>'`
+`truncate(string, 5) =======> '<p><div>hello...</div></p>'`
 
-output HTML <p><div>hello</div></p>
+output HTML <p><div>hello...</div></p>
 
 `string = '<p><div>Do you <b>think</b> it is useful</div></p>';`
 
-`truncate(string, 10) =======> '<p><div>Do you <b>thi</b></div></p>'`
+`truncate(string, 10) =======> '<p><div>Do you <b>thi...</b></div></p>'`
 
-output HTML <p><div>Do you <b>thi</b></div></p>
+output HTML <p><div>Do you <b>thi...</b></div></p>
+
+## options
+### keepImageTag (default: false)
+`var string = '<p><img src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo logo"><div>hello world</div></p>';`
+
+`truncate(string, 5, { keepImageTag: true }) =======> '<p><img src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo logo"><div>hello...</div></p>'`
+
+### ellipsis (default: '...')
+`var string = '<p><div>hello world</div></p>';`
+
+`truncate(string, 5) =======> '<p><div>hello...</div></p>'`
+
+`truncate(string, 5, { ellipsis: '+++' }) =======> '<p><div>hello+++</div></p>'`
+
+`truncate(string, 5, { ellipsis: false }) =======> '<p><div>hello</div></p>'`
 
 ## demo
 ./demo
