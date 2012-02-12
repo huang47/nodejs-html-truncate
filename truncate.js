@@ -19,11 +19,13 @@ module.exports.truncate = function (string, maxLength, options) {
       , total = 0                       // record how many characters we traced so far
       , content = EMPTY_STRING          // truncated text storage
       , KEY_VALUE_REGEX = '(\\w+\\s*=\\s*"[^"]*"\\s*)*'
-      , SELF_CLOSE_REGEX = '\\s*\\/?\\s*'
-      , HTML_TAG_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + SELF_CLOSE_REGEX + '>')
-      , IMAGE_TAG_REGEX = new RegExp('<img\\s*' + KEY_VALUE_REGEX + SELF_CLOSE_REGEX + '>')
+      , IS_CLOSE_REGEX = '\\s*\\/?\\s*'
+      , CLOSE_REGEX = '\\s*\\/\\s*'
+      , SELF_CLOSE_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + CLOSE_REGEX + '>')
+      , HTML_TAG_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>')
+      , IMAGE_TAG_REGEX = new RegExp('<img\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>')
       , matches = true
-      , result, index, tail, tag;
+      , result, index, tail, tag, selfClose;
 
     /**
      * @private
@@ -108,16 +110,23 @@ module.exports.truncate = function (string, maxLength, options) {
             // move out open tag
             items.pop();
         } else {
-            tag = _getTag(result);
+            selfClose = SELF_CLOSE_REGEX.exec(result);
+            if ( ! selfClose) {
+                tag = _getTag(result);
 
-            items.push(tag);
+                items.push(tag);
+            }
         }
 
-        content += result;
+        if (selfClose) {
+            content += selfClose[0];
+        } else {
+            content += result;
+        }
         string = string.substring(index + result.length);
     }
 
-    if (options.ellipsis) {
+    if (string.length > maxLength && options.ellipsis) {
         content += options.ellipsis;
     }
     content += _dumpCloseTag(items);

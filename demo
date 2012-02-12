@@ -69,3 +69,13 @@ yellow(truncate(str1, 10));
 green(str2);
 yellow('w/o  image tag: ' + truncate(str2, 10));
 yellow('with image tag: ' + truncate(str2, 10, { keepImageTag: true }));
+
+red('round 6 : self-closed tags');
+var str1 = '<p class="angle > "><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">ahh... something happened</p>'
+  , str2 = '<p><div><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">Does truncate handle close tag properly <br /> even exterior angle is included in tag content?</div></p>';
+
+green(str1);
+yellow(truncate(str1, 10));
+green(str2);
+yellow('w/o  image tag: ' + truncate(str2, 50));
+yellow('with image tag: ' + truncate(str2, 50, { keepImageTag: true }));
