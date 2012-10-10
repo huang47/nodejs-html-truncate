@@ -9,6 +9,7 @@
  * @param {Object} options (optional)
  * @param {Boolean} [options.keepImageTag] flag to specify if keep image tag, false by default
  * @param {Boolean|String} [options.ellipsis] omission symbol for truncated string, '...' by default
+ * @param {Boolean} [options.truncateLastWord] truncates last word, true by default
  * @return {String} truncated string
  */
 module.exports.truncate = function (string, maxLength, options) {
@@ -83,6 +84,7 @@ module.exports.truncate = function (string, maxLength, options) {
 
     options = options || EMPTY_OBJECT;
     options.ellipsis = options.ellipsis || '...';
+    options.truncateLastWord = (options.truncateLastWord === undefined) ? true : options.truncateLastWord;
 
     while(matches) {
         matches = HTML_TAG_REGEX.exec(string);
@@ -127,7 +129,11 @@ module.exports.truncate = function (string, maxLength, options) {
     }
 
     if (string.length > maxLength && options.ellipsis) {
-        content += options.ellipsis;
+    	if (options.truncateLastWord) {
+    		content += options.ellipsis;
+		} else {
+			content = content.replace(/ \w*$/, options.ellipsis);
+		}
     }
     content += _dumpCloseTag(items);
 
