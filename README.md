@@ -40,9 +40,9 @@ output HTML <p><div>Do you <b>thi...</b></div></p>
 ./demo
 
 ## documentation (powered by yuidoc)
-npm i yuidocjs -g
-yuidoc --server .
-open http://localhost:3000
+`npm i yuidocjs -g`
+`yuidoc --server .`
+`open http://localhost:3000`
 
 ## npm package
 npm install [html-truncate][1]
