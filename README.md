@@ -29,6 +29,13 @@ output HTML <p><div>Do you <b>thi...</b></div></p>
 
 `truncate(string, 5, { ellipsis: false }) =======> '<p><div>hello</div></p>'`
 
+### truncateLastWord (default: true)
+`var string = 'hello world this is a test string';`
+
+`truncate(string, 15) =======> 'hello world thi...'`
+`truncate(string, 15, { truncateLastWord: true }) =======> 'hello world thi...'`
+`truncate(string, 15, { truncateLastWord: false }) =======> 'hello world...'`
+
 ## demo
 ./demo
 
