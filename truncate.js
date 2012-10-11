@@ -1,8 +1,17 @@
+/*jslint nomen:true*/
+'use strict';
+
 /**
  * HTML-Truncate Utility
  * This utility truncates html text and keep tag safe(close properly)
  *
- * @public
+ * @module Utility
+ * @class Utility
+ */
+function Utility() {}
+
+/**
+ * @static
  * @method truncate
  * @param {String} string string needs to be truncated
  * @param {Number} maxLength length of truncated string
@@ -12,44 +21,57 @@
  * @param {Boolean} [options.truncateLastWord] truncates last word, true by default
  * @return {String} truncated string
  */
-module.exports.truncate = function (string, maxLength, options) {
-    var EMPTY_OBJECT = {}
-      , EMPTY_STRING = ''
-      , EXCLUDE_TAGS = ['img']          // non-closed tags
-      , items = []                      // stack for saving tags
-      , total = 0                       // record how many characters we traced so far
-      , content = EMPTY_STRING          // truncated text storage
-      , KEY_VALUE_REGEX = '(\\w+\\s*=\\s*"[^"]*"\\s*)*'
-      , IS_CLOSE_REGEX = '\\s*\\/?\\s*'
-      , CLOSE_REGEX = '\\s*\\/\\s*'
-      , SELF_CLOSE_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + CLOSE_REGEX + '>')
-      , HTML_TAG_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>')
-      , IMAGE_TAG_REGEX = new RegExp('<img\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>')
-      , matches = true
-      , result, index, tail, tag, selfClose;
+Utility.truncate = function (string, maxLength, options) {
+    var EMPTY_OBJECT = {},
+        EMPTY_STRING = '',
+        DEFAULT_TRUNCATE_SYMBOL = '...',
+        EXCLUDE_TAGS = ['img'],         // non-closed tags
+        items = [],                     // stack for saving tags
+        total = 0,                      // record how many characters we traced so far
+        content = EMPTY_STRING,         // truncated text storage
+        KEY_VALUE_REGEX = '(\\w+\\s*=\\s*"[^"]*"\\s*)*',
+        IS_CLOSE_REGEX = '\\s*\\/?\\s*',
+        CLOSE_REGEX = '\\s*\\/\\s*',
+        SELF_CLOSE_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + CLOSE_REGEX + '>'),
+        HTML_TAG_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>'),
+        IMAGE_TAG_REGEX = new RegExp('<img\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>'),
+        matches = true,
+        result,
+        index,
+        tail,
+        tag,
+        selfClose;
 
     /**
      * @private
-     * helper to dump all close tags and append to truncated content while reaching upperbound
+     * @method _removeImageTag
+     * @param {String} string not-yet-processed string
+     * @description helper to dump all close tags and append to truncated content while reaching upperbound
+     * @return {String} string without image tags
      */
-    var _removeImageTag = function (string) {
-        var match = IMAGE_TAG_REGEX.exec(string)
-          , index, len;
+    function _removeImageTag(string) {
+        var match = IMAGE_TAG_REGEX.exec(string),
+            index,
+            len;
 
-        if ( ! match) {
+        if (!match) {
             return string;
         }
 
         index = match.index;
         len = match[0].length;
+
         return string.substring(0, index) + string.substring(index + len);
     }
 
     /**
      * @private
-     * helper to dump all close tags and append to truncated content while reaching upperbound
+     * @method _dumpCloseTag
+     * @param {String[]} tags a list of tags which should be closed
+     * @description helper to dump all close tags and append to truncated content while reaching upperbound
+     * @return {String} well-formatted html
      */
-    var _dumpCloseTag = function (tags) {
+    function _dumpCloseTag(tags) {
         var html = '';
 
         tags.reverse().forEach(function (tag, index) {
@@ -58,24 +80,26 @@ module.exports.truncate = function (string, maxLength, options) {
                 html += '</' + tag + '>';
             }
         });
-        
+
         return html;
     }
 
     /**
      * @private
-     * processed tag string to get pure tag name
+     * @method _getTag
+     * @param {String} string original html
+     * @description processed tag string to get pure tag name
+     * @return {String} tag name
      */
-    var _getTag = function (string) {
+    function _getTag(string) {
         var tail = string.indexOf(' ');
 
-        // super ugly implementation
         // TODO: 
-        // we have to figure out how to handle non-well-formed HTML case
+        // we have to figure out how to handle non-well-formatted HTML case
         if (-1 === tail) {
             tail = string.indexOf('>');
             if (-1 === tail) {
-                console.log('HTML tag is not well-formed : ' + string);
+                throw new Error('HTML tag is not well-formed : ' + string);
             }
         }
 
@@ -83,13 +107,13 @@ module.exports.truncate = function (string, maxLength, options) {
     }
 
     options = options || EMPTY_OBJECT;
-    options.ellipsis = options.ellipsis || '...';
+    options.ellipsis = options.ellipsis || DEFAULT_TRUNCATE_SYMBOL;
     options.truncateLastWord = (options.truncateLastWord === undefined) ? true : options.truncateLastWord;
 
-    while(matches) {
+    while (matches) {
         matches = HTML_TAG_REGEX.exec(string);
 
-        if ( ! matches) {
+        if (!matches) {
             if (total < maxLength) {
                 content += string.substring(0, maxLength - total);
             }
@@ -100,7 +124,7 @@ module.exports.truncate = function (string, maxLength, options) {
         index = matches.index;
 
         if (total + index > maxLength) {
-            // overceed, dump everything to clear stack
+            // exceed given `maxLength`, dump everything to clear stack
             content += (string.substring(0, maxLength - total));
             break;
         } else {
@@ -113,7 +137,7 @@ module.exports.truncate = function (string, maxLength, options) {
             items.pop();
         } else {
             selfClose = SELF_CLOSE_REGEX.exec(result);
-            if ( ! selfClose) {
+            if (!selfClose) {
                 tag = _getTag(result);
 
                 items.push(tag);
@@ -129,17 +153,19 @@ module.exports.truncate = function (string, maxLength, options) {
     }
 
     if (string.length > maxLength && options.ellipsis) {
-    	if (options.truncateLastWord) {
-    		content += options.ellipsis;
-		} else {
-			content = content.replace(/ \w*$/, options.ellipsis);
-		}
+        if (options.truncateLastWord) {
+            content += options.ellipsis;
+        } else {
+            content = content.replace(/ \w*$/, options.ellipsis);
+        }
     }
     content += _dumpCloseTag(items);
 
-    if ( ! options.keepImageTag) {
+    if (!options.keepImageTag) {
         content = _removeImageTag(content);
     }
 
     return content;
-}
+};
+
+module.exports = Utility;
