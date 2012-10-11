@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-var lib = require('./truncate.js')
-  , truncate = lib.truncate
-  , truncateTagSafe = lib.truncateTagSafe
-  , COLOR = { r: '\033[1;31m', g: '\033[1;32m', y: '\033[1;33m', none: '\033[0m' }
-  , red, green, yellow;
+var lib = require('./truncate.js'),
+    truncate = lib.truncate,
+    truncateTagSafe = lib.truncateTagSafe,
+    COLOR = { r: '\033[1;31m', g: '\033[1;32m', y: '\033[1;33m', none: '\033[0m' },
+    red, green, yellow;
 
 red = function (str) {
     console.log(COLOR.r + str + COLOR.none);
@@ -61,8 +61,8 @@ yellow('w/o  image tag: ' + truncate(src, 5));
 yellow('with image tag: ' + truncate(src, 5, { keepImageTag: true }));
 
 red('round 5 : special cases');
-var str1 = '<p class="angle > ">ahh... something happened</p>'
-  , str2 = '<p><div><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">Does truncate handle close tag properly even exterior angle is included in tag content?</div></p>';
+var str1 = '<p class="angle > ">ahh... something happened</p>',
+    str2 = '<p><div><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">Does truncate handle close tag properly even exterior angle is included in tag content?</div></p>';
 
 green(str1);
 yellow(truncate(str1, 10));
@@ -71,11 +71,20 @@ yellow('w/o  image tag: ' + truncate(str2, 10));
 yellow('with image tag: ' + truncate(str2, 10, { keepImageTag: true }));
 
 red('round 6 : self-closed tags');
-var str1 = '<p class="angle > "><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">ahh... something happened</p>'
-  , str2 = '<p><div><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">Does truncate handle close tag properly <br /> even exterior angle is included in tag content?</div></p>';
+var str1 = '<p class="angle > "><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">ahh... something happened</p>',
+    str2 = '<p><div><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo > logo">Does truncate handle close tag properly <br /> even exterior angle is included in tag content?</div></p>';
 
 green(str1);
 yellow(truncate(str1, 10));
 green(str2);
 yellow('w/o  image tag: ' + truncate(str2, 50));
 yellow('with image tag: ' + truncate(str2, 50, { keepImageTag: true }));
+
+red('round 7 : exclude last word if string length exceed given maxLength');
+var str = 'hello world this is a test string';
+
+green(str);
+yellow('truncateLastWord === true');
+yellow(truncate(str, 15));
+yellow('truncateLastWord === false');
+yellow(truncate(str, 15, { truncateLastWord: false }));
