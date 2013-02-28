@@ -1,6 +1,6 @@
 /*global module:true*/
 /*jslint nomen:true*/
-(function (undefined) {
+(function (context, undefined) {
     'use strict';
 
     /**
@@ -37,10 +37,11 @@
             selfClose;
 
         /**
+         * Remove image tag
+         *
          * @private
          * @method _removeImageTag
          * @param {String} string not-yet-processed string
-         * @description helper to dump all close tags and append to truncated content while reaching upperbound
          * @return {String} string without image tags
          */
         function _removeImageTag(string) {
@@ -59,10 +60,11 @@
         }
 
         /**
+         * Dump all close tags and append to truncated content while reaching upperbound
+         *
          * @private
          * @method _dumpCloseTag
          * @param {String[]} tags a list of tags which should be closed
-         * @description helper to dump all close tags and append to truncated content while reaching upperbound
          * @return {String} well-formatted html
          */
         function _dumpCloseTag(tags) {
@@ -79,10 +81,11 @@
         }
 
         /**
+         * Process tag string to get pure tag name
+         *
          * @private
          * @method _getTag
          * @param {String} string original html
-         * @description processed tag string to get pure tag name
          * @return {String} tag name
          */
         function _getTag(string) {
@@ -160,6 +163,6 @@
     if ('undefined' !== typeof module && module.exports) {
         module.exports = truncate;
     } else {
-        this.truncate = truncate;
+        context.truncate = truncate;
     }
-}());
+}(this));

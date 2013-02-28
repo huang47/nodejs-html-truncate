@@ -5,6 +5,7 @@ Truncate HTML text and also keep tag safe
 
 | Version | Logs |
 |:--|:--|
+| 1.0.2 | support browser |
 | 1.0.0 | deprecated: truncateLastWord. Also, exports function directly |
 | 0.3.1 | features done |
 
