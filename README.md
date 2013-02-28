@@ -1,53 +1,105 @@
-# motivation
-To create a library ease to truncate HTML text and keep tag safe
+# Motivation
+Truncate HTML text and also keep tag safe
 
-## example
-`var string = '<p><div>hello world</div></p>';`
+# CHANGELOG
 
-`truncate(string, 5) =======> '<p><div>hello...</div></p>'`
+| Version | Logs |
+|:--|:--|
+| 1.0.0 | deprecated: truncateLastWord. Also, exports function directly |
+| 0.3.1 | features done |
 
-output HTML <p><div>hello...</div></p>
+## API
+```
+/**
+ * @static
+ * @method truncate
+ * @param {String} string string needs to be truncated
+ * @param {Number} maxLength length of truncated string
+ * @param {Object} options (optional)
+ * @param {Boolean} [options.keepImageTag] flag to specify if keep image tag, false by default
+ * @param {Boolean|String} [options.ellipsis] omission symbol for truncated string, '...' by default
+ * @return {String} truncated string
+ */
+truncate(string, length, options);
+```
 
-`string = '<p><div>Do you <b>think</b> it is useful</div></p>';`
+## usage
+```
+var truncate = require('html-truncate');
+```
 
-`truncate(string, 10) =======> '<p><div>Do you <b>thi...</b></div></p>'`
+### truncate text
+```
+truncate('hello world', 4)
 
-output HTML <p><div>Do you <b>thi...</b></div></p>
+// hell...
+```
 
-## options
-### keepImageTag (default: false)
-`var string = '<p><img src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo logo"><div>hello world</div></p>';`
+```
+truncate('hello world', 6)
 
-`truncate(string, 5, { keepImageTag: true }) =======> '<p><img src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo logo"><div>hello...</div></p>'`
+// hello ...
+```
 
-### ellipsis (default: '...')
-`var string = '<p><div>hello world</div></p>';`
+### keep tag safe
+```
+truncate('<p><div>hello world</div></p>', 4)
 
-`truncate(string, 5) =======> '<p><div>hello...</div></p>'`
+// <p><div>hell...</div></p> 
+```
 
-`truncate(string, 5, { ellipsis: '+++' }) =======> '<p><div>hello+++</div></p>'`
+### keep image tag (if any)
+#### non-closed
+```
+truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo">Do you <b>think</b> it is useful</div></p>', 3, { keepImageTag: true })
 
-`truncate(string, 5, { ellipsis: false }) =======> '<p><div>hello</div></p>'`
+// <p><div><img class="yahoo" src="#" alt="yahoo logo">Do ...</div></p>
+```
 
-### truncateLastWord (default: true)
-`var string = 'hello world this is a test string';`
+```
+truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo">Do you <b>think</b> it is useful</div></p>', 10, { keepImageTag: true })
 
-`truncate(string, 15) =======> 'hello world thi...'`
-`truncate(string, 15, { truncateLastWord: true }) =======> 'hello world thi...'`
-`truncate(string, 15, { truncateLastWord: false }) =======> 'hello world...'`
+// <p><div><img class="yahoo" src="#" alt="yahoo logo">Do you <b>thi...</b></div></p>
+```
 
-## demo
-./demo
 
-## documentation (powered by yuidoc)
-`npm i yuidocjs -g`
-`yuidoc --server .`
-`open http://localhost:3000`
+#### self-closed
+```
+truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo" />Do you <b>think</b> it is useful</div></p>', 3, { keepImageTag: true })
+// <p><div>Do ...</div></p>
+```
 
-## npm package
-npm install [html-truncate][1]
+```
+truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo" />Do you <b>think</b> it is useful</div></p>', 10, { keepImageTag: true })
+// <p><div><img class="yahoo" src="#" alt="yahoo logo" />Do you <b>thi...</b></div></p>
+```
 
-[1]: http://search.npmjs.org/#/html-truncate
+### customize suffix
+```
+truncate('<p><div>hello world</div></p>', 4, { ellipsis: '###' })
+
+// <p><div>hell###</div></p> 
+```
+
+```
+truncate('<p><div>hello world</div></p>', 4, { ellipsis: '' })
+
+// <p><div>hell</div></p> 
+```
+
+## NOTICE
+
+
+## Appendix
+[npm: html-truncate](http://search.npmjs.org/#/html-truncate)
+
+## dependencies
+
+### unit test
+[npm: mocha](https://npmjs.org/package/mocha)
+
+### documentation
+[npm: yuidocjs](https://npmjs.org/package/yuidocjs)
 
 ## LICENSE
 Copyrights for code authored by Yahoo! Inc. is licensed under the following terms:
