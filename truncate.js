@@ -1,12 +1,14 @@
 /*global module:true*/
 /*jslint nomen:true*/
+/**
+ * @module Utility
+ */
 (function (context, undefined) {
     'use strict';
 
     /**
      * Truncate HTML string and keep tag safe.
      *
-     * @static
      * @method truncate
      * @param {String} string string needs to be truncated
      * @param {Number} maxLength length of truncated string

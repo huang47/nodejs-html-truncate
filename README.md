@@ -1,11 +1,14 @@
 # Motivation
-Truncate HTML text and also keep tag safe
+Truncate HTML text and also keep tag safe.
 
-# CHANGELOG
+## NOTICE
+Given string is expected to be well-formatted HTML.
+
+## CHANGELOG
 
 | Version | Logs |
 |:--|:--|
-| 1.0.2 | support browser |
+| 1.0.3 | support browser |
 | 1.0.0 | deprecated: truncateLastWord. Also, exports function directly |
 | 0.3.1 | features done |
 

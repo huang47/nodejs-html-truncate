@@ -60,7 +60,7 @@ describe('truncate', function() {
     assert.strictEqual(expect, actual);
   });
 
-  it('should handle non-closed tag such as <img> well', function() {
+  it('should handle self-closed tag such as <img/> well', function() {
     var input, expect, actual;
 
     input = '<p><div><img class="yahoo" src="http://l.yimg.com/a/i/ww/met/yahoo_logo_us_061509.png" alt="yahoo logo" />Do you <b>think</b> it is useful</div></p>';
