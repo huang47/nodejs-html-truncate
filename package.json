@@ -14,6 +14,9 @@
   "engines": {
     "node": "*"
   },
+  "contributors": [
+      "Francois-Guillaume Ribreau <npm@fgribreau.com> (http://fgribreau.com)"
+  ],
   "dependencies": {},
   "devDependencies": {
     "mocha": "*",
