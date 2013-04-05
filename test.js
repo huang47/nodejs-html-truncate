@@ -1,5 +1,6 @@
 var assert = require('assert');
-var truncate = require('./truncate.js');
+var utility = require('./truncate.js');
+var truncate = utility.truncate;
 
 describe('truncate', function() {
   it('should truncate text with given length', function() {

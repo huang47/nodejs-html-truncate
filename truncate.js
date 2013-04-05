@@ -1,9 +1,24 @@
-/*global module:true*/
+/*global define*/
 /*jslint nomen:true*/
+
 /**
  * @module Utility
  */
-(function (context, undefined) {
+
+(function (root, factory) {
+    'use strict';
+
+    // Universal Module Definition (UMD) to support AMD, CommonJS/Node.js,
+    // Rhino, and plain browser loading.
+    if (typeof define === 'function' && define.amd) {
+        define(['exports'], factory);
+    } else if (typeof exports !== 'undefined') {
+        factory(exports);
+    } else {
+        factory((root.truncate = {}));
+    }
+
+}(this, function (exports) {
     'use strict';
 
     /**
@@ -42,11 +57,11 @@
          * Remove image tag
          *
          * @private
-         * @method _removeImageTag
+         * @method removeImageTag
          * @param {String} string not-yet-processed string
          * @return {String} string without image tags
          */
-        function _removeImageTag(string) {
+        function removeImageTag(string) {
             var match = IMAGE_TAG_REGEX.exec(string),
                 index,
                 len;
@@ -156,15 +171,13 @@
         content += _dumpCloseTag(items);
 
         if (!options.keepImageTag) {
-            content = _removeImageTag(content);
+            content = removeImageTag(content);
         }
 
         return content;
     }
 
-    if ('undefined' !== typeof module && module.exports) {
-        module.exports = truncate;
-    } else {
-        context.truncate = truncate;
-    }
-}(this));
+    exports.truncate = truncate;
+
+    exports.version = '1.1.0';
+}));
