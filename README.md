@@ -1,3 +1,5 @@
+# [![Build Status](https://secure.travis-ci.org/huang47/nodejs-html-truncate.png?branch=master)](http://travis-ci.org/huang47/nodejs-html-truncate)
+
 # Motivation
 Truncate HTML text and also keep tag safe.
 
