@@ -30,7 +30,7 @@
             CLOSE_REGEX = '\\s*\\/\\s*',
             SELF_CLOSE_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + CLOSE_REGEX + '>'),
             HTML_TAG_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>'),
-            URL_REGEX = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g, // Simple regexp
+            URL_REGEX = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w\-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g, // Simple regexp
             IMAGE_TAG_REGEX = new RegExp('<img\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>'),
             matches = true,
             result,
@@ -113,15 +113,15 @@
             matches = HTML_TAG_REGEX.exec(string);
 
             if (!matches) {
-                if (total >= maxLength) {break;}
+                if (total >= maxLength) { break; }
 
                 matches = URL_REGEX.exec(string);
-                if(!matches || matches.index >= maxLength){
+                if (!matches || matches.index >= maxLength) {
                     content += string.substring(0, maxLength - total);
                     break;
                 }
 
-                while(matches){
+                while (matches) {
                     result = matches[0];
                     index = matches.index;
                     content += string.substring(0, (index + result.length) - total);
