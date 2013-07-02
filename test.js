@@ -48,6 +48,11 @@ describe('truncate', function() {
     expect = '<p><div>hello...</div></p>';
     assert.strictEqual(expect, actual);
 
+    input = '<p><div data-source="yahoo">hello world</p></div>';
+    actual = truncate(input, 5);
+    expect = '<p><div data-source="yahoo">hello...</div></p>';
+    assert.strictEqual(expect, actual);
+
     // complex example
     input = '<b class="yui3-highlight">Zooey</b> Deschanel embodies quirky cute and she is quickly becoming America\'s sweetheart. <b class="yui3-highlight">Here</b> are some of the "New Girl" star\'s best looks and information on w<b class="yui3-highlight">here</b> you can buy them';
     actual = truncate(input, 100);
