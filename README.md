@@ -15,7 +15,7 @@ Given string is expected to be well-formatted HTML.
 | 0.3.1 | features done |
 
 ## API
-```
+```javascript
 /**
  * @static
  * @method truncate
@@ -30,25 +30,25 @@ truncate(string, length, options);
 ```
 
 ## usage
-```
+```javascript
 var truncate = require('html-truncate');
 ```
 
 ### truncate text
-```
+```javascript
 truncate('hello world', 4)
 
 // hell...
 ```
 
-```
+```javascript
 truncate('hello world', 6)
 
 // hello ...
 ```
 
 ### keep tag safe
-```
+```javascript
 truncate('<p><div>hello world</div></p>', 4)
 
 // <p><div>hell...</div></p> 
@@ -56,13 +56,13 @@ truncate('<p><div>hello world</div></p>', 4)
 
 ### keep image tag (if any)
 #### non-closed
-```
+```javascript
 truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo">Do you <b>think</b> it is useful</div></p>', 3, { keepImageTag: true })
 
 // <p><div><img class="yahoo" src="#" alt="yahoo logo">Do ...</div></p>
 ```
 
-```
+```javascript
 truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo">Do you <b>think</b> it is useful</div></p>', 10, { keepImageTag: true })
 
 // <p><div><img class="yahoo" src="#" alt="yahoo logo">Do you <b>thi...</b></div></p>
@@ -70,24 +70,24 @@ truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo">Do you <b>think</b
 
 
 #### self-closed
-```
+```javascript
 truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo" />Do you <b>think</b> it is useful</div></p>', 3, { keepImageTag: true })
 // <p><div>Do ...</div></p>
 ```
 
-```
+```javascript
 truncate('<p><div><img class="yahoo" src="#" alt="yahoo logo" />Do you <b>think</b> it is useful</div></p>', 10, { keepImageTag: true })
 // <p><div><img class="yahoo" src="#" alt="yahoo logo" />Do you <b>thi...</b></div></p>
 ```
 
 ### customize suffix
-```
+```javascript
 truncate('<p><div>hello world</div></p>', 4, { ellipsis: '###' })
 
 // <p><div>hell###</div></p> 
 ```
 
-```
+```javascript
 truncate('<p><div>hello world</div></p>', 4, { ellipsis: '' })
 
 // <p><div>hell</div></p> 
