@@ -14,6 +14,8 @@
      * @param {Number} maxLength length of truncated string
      * @param {Object} options (optional)
      * @param {Boolean} [options.keepImageTag] flag to specify if keep image tag, false by default
+     * @param {Boolean} [options.truncateLastWord] truncates last word, true by default
+     * @param {Number} [options.slop] tolerance when options.truncateLastWord is false before we give up and just truncate at the maxLength position, 10 by default (but not greater than maxLength)
      * @param {Boolean|String} [options.ellipsis] omission symbol for truncated string, '...' by default
      * @return {String} truncated string
      */
@@ -21,6 +23,7 @@
         var EMPTY_OBJECT = {},
             EMPTY_STRING = '',
             DEFAULT_TRUNCATE_SYMBOL = '...',
+            DEFAULT_SLOP = 10 > maxLength ? maxLength : 10,
             EXCLUDE_TAGS = ['img'],         // non-closed tags
             items = [],                     // stack for saving tags
             total = 0,                      // record how many characters we traced so far
@@ -32,6 +35,7 @@
             HTML_TAG_REGEX = new RegExp('<\\/?\\w+\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>'),
             URL_REGEX = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w\-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g, // Simple regexp
             IMAGE_TAG_REGEX = new RegExp('<img\\s*' + KEY_VALUE_REGEX + IS_CLOSE_REGEX + '>'),
+            WORD_BREAK_REGEX = new RegExp('\\W+', 'g'),
             matches = true,
             result,
             index,
@@ -106,8 +110,66 @@
             return string.substring(1, tail);
         }
 
+
+        /**
+         * Get the end position for String#substring()
+         *
+         * If options.truncateLastWord is FALSE, we try to the end position up to
+         * options.slop characters to avoid breaking in the middle of a word.
+         *
+         * @private
+         * @method _getEndPosition
+         * @param {String} string original html
+         * @param {Number} tailPos (optional) provided to avoid extending the slop into trailing HTML tag
+         * @return {Number} maxLength
+         */
+        function _getEndPosition (string, tailPos) {
+            var defaultPos = maxLength - total,
+                position = defaultPos,
+                isShort = defaultPos < options.slop,
+                slopPos = isShort ? defaultPos : options.slop - 1,
+                substr,
+                startSlice = isShort ? 0 : defaultPos - options.slop,
+                endSlice = tailPos || (defaultPos + options.slop),
+                result;
+
+            if (!options.truncateLastWord) {
+
+                substr = string.slice(startSlice, endSlice);
+
+                if (tailPos && substr.length <= tailPos) {
+                    position = substr.length;
+                }
+                else {
+                    while ((result = WORD_BREAK_REGEX.exec(substr)) !== null) {
+                        // a natural break position before the hard break position
+                        if (result.index < slopPos) {
+                            position = defaultPos - (slopPos - result.index);
+                            // keep seeking closer to the hard break position
+                            // unless a natural break is at position 0
+                            if (result.index === 0 && defaultPos <= 1) break;
+                        }
+                        // a natural break position exactly at the hard break position
+                        else if (result.index === slopPos) {
+                            position = defaultPos;
+                            break; // seek no more
+                        }
+                        // a natural break position after the hard break position
+                        else {
+                            position = defaultPos + (result.index - slopPos);
+                            break;  // seek no more
+                        }
+                    }
+                }
+                if (string.charAt(position - 1).match(/\s$/)) position--;
+            }
+            return position;
+        }
+
         options = options || EMPTY_OBJECT;
         options.ellipsis = (undefined !== options.ellipsis) ? options.ellipsis : DEFAULT_TRUNCATE_SYMBOL;
+        options.truncateLastWord = (undefined !== options.truncateLastWord) ? options.truncateLastWord : true;
+        options.slop = (undefined !== options.slop) ? options.slop : DEFAULT_SLOP;
 
         while (matches) {
             matches = HTML_TAG_REGEX.exec(string);
@@ -117,7 +179,7 @@
 
                 matches = URL_REGEX.exec(string);
                 if (!matches || matches.index >= maxLength) {
-                    content += string.substring(0, maxLength - total);
+                    content += string.substring(0, _getEndPosition(string));
                     break;
                 }
 
@@ -136,7 +198,7 @@
 
             if (total + index > maxLength) {
                 // exceed given `maxLength`, dump everything to clear stack
-                content += (string.substring(0, maxLength - total));
+                content += string.substring(0, _getEndPosition(string, index));
                 break;
             } else {
                 total += index;
@@ -163,7 +225,7 @@
             string = string.substring(index + result.length);
         }
 
-        if (string.length > maxLength && options.ellipsis) {
+        if (string.length > maxLength - total && options.ellipsis) {
             content += options.ellipsis;
         }
         content += _dumpCloseTag(items);

@@ -122,4 +122,75 @@ describe('truncate', function() {
     expect = '<p><div>hel---WHATEVER-I-WANT</div></p>';
     assert.strictEqual(expect, actual);
   });
+
+  it('should not truncate in the middle of a word', function () {
+    var input, expect, actual;
+
+    // break within slop
+    input = 'a good little fox is a good little forest creature';
+    actual = truncate(input, 26, { truncateLastWord: false });
+    expect = 'a good little fox is a good...';
+    assert.strictEqual(actual, expect);
+    // with html
+    input = 'a good little fox is <span>a good</span> little forest creature';
+    actual = truncate(input, 26, { truncateLastWord: false });
+    expect = 'a good little fox is <span>a good...</span>'; // @TODO - this should have the elipsis outside the tag
+    assert.strictEqual(actual, expect);
+
+    // break within slop
+    input = 'a good little fox is a good little forest creature';
+    actual = truncate(input, 27, { truncateLastWord: false });
+    expect = 'a good little fox is a good...';
+    assert.strictEqual(actual, expect);
+    // with html
+    input = 'a good little fox is <span>a good</span> little forest creature';
+    actual = truncate(input, 27, { truncateLastWord: false });
+    expect = 'a good little fox is <span>a good</span>...';
+    assert.strictEqual(actual, expect);
+
+    // break within slop
+    input = 'a good little fox is a good little forest creature';
+    actual = truncate(input, 28, { truncateLastWord: false });
+    expect = 'a good little fox is a good...';
+    assert.strictEqual(actual, expect);
+    // with html
+    input = 'a good little fox is <span>a good</span> little forest creature';
+    actual = truncate(input, 28, { truncateLastWord: false });
+    expect = 'a good little fox is <span>a good</span>...';
+    assert.strictEqual(actual, expect);
+
+    // break within slop
+    input = 'a good little fox is a good little forest creature';
+    actual = truncate(input, 29, { truncateLastWord: false });
+    expect = 'a good little fox is a good little...';
+    assert.strictEqual(actual, expect);
+    // with html
+    input = 'a good little fox is <span>a good</span> little forest creature';
+    actual = truncate(input, 29, { truncateLastWord: false });
+    expect = 'a good little fox is <span>a good</span> little...';
+    assert.strictEqual(actual, expect);
+
+    // break after not within slop
+    input = 'a good little fox is a good little forest creature';
+    actual = truncate(input, 29, { truncateLastWord: false, slop: 2 });
+    expect = 'a good little fox is a good...';
+    assert.strictEqual(actual, expect);
+    // with html
+    input = 'a good little fox is <span>a good</span> little forest creature';
+    actual = truncate(input, 29, { truncateLastWord: false, slop: 2 });
+    expect = 'a good little fox is <span>a good</span>...';
+    assert.strictEqual(actual, expect);
+
+    // no break within slop
+    input = 'a good little fox is a good little forest creature';
+    actual = truncate(input, 46, { truncateLastWord: false, slop: 2 });
+    expect = 'a good little fox is a good little forest crea...';
+    assert.strictEqual(actual, expect);
+    // with html
+    input = 'a good little fox is <span>a good</span> little forest creature';
+    actual = truncate(input, 46, { truncateLastWord: false, slop: 2 });
+    expect = 'a good little fox is <span>a good</span> little forest crea...';
+    assert.strictEqual(actual, expect);
+
+  });
 });
