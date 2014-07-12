@@ -3,23 +3,27 @@
   "name": "html-truncate",
   "main": "truncate.js",
   "description": "truncate html text and keep tag safe",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": {
     "type": "git",
     "url": "git://github.com/huang47/nodejs-html-truncate.git"
   },
   "scripts": {
-    "test": "mocha --reporter spec"
+    "pretest": "npm i",
+    "test": "./node_modules/mocha/bin/mocha --reporter spec",
+    "postpublish": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "engines": {
     "node": "*"
   },
   "contributors": [
-      "Francois-Guillaume Ribreau <npm@fgribreau.com> (http://fgribreau.com)"
+    "Francois-Guillaume Ribreau <npm@fgribreau.com> (http://fgribreau.com)"
   ],
   "dependencies": {},
   "devDependencies": {
+    "coveralls": "^2.11.1",
     "mocha": "*",
+    "mocha-lcov-reporter": "0.0.1",
     "yuidocjs": "*"
   }
 }
