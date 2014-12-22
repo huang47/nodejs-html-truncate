@@ -163,7 +163,7 @@
             string = string.substring(index + result.length);
         }
 
-        if (string.length > maxLength && options.ellipsis) {
+        if (string.length > maxLength - total && options.ellipsis) {
             content += options.ellipsis;
         }
         content += _dumpCloseTag(items);
