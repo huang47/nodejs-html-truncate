@@ -163,9 +163,19 @@
             string = string.substring(index + result.length);
         }
 
+        if (string.length > maxLength && options.nobreak){
+            for(var i=content.length-1; i>=0; i--){
+                if(content[i]==' '){
+                    content = content.substring(0,i);
+                    break; 
+                } 
+            } 
+        }
+        
         if (string.length > maxLength && options.ellipsis) {
             content += options.ellipsis;
         }
+         
         content += _dumpCloseTag(items);
 
         if (!options.keepImageTag) {
