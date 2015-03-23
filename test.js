@@ -34,6 +34,13 @@ describe('truncate', function() {
     assert.strictEqual(expect, actual);
   });
 
+  it('should truncate without breaking mid-word when nobreak is set to true', function(){
+        var input, expected, actual;
+        input = '<div><p>Hello world! Agriculture is a long word.</p></div>'; 
+        actual = truncate(input, 18, {nobreak:true});
+        expect = '<div><p>Hello world!...</p></div>';
+        assert.strictEqual(expect,actual); 
+  });
 
   it('should keep tag safe', function() {
     var input, expect, actual;
