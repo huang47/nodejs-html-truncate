@@ -208,6 +208,7 @@
             if ('/' === result[1]) {
                 // move out open tag
                 items.pop();
+                selfClose=null;
             } else {
                 selfClose = SELF_CLOSE_REGEX.exec(result);
                 if (!selfClose) {
