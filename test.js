@@ -193,4 +193,13 @@ describe('truncate', function() {
     assert.strictEqual(actual, expect);
 
   });
+
+  it('should append ellipsis if the string has been shortened', function() {
+    var input, expect, actual;
+
+    input  = 'thisare19characters <a href="http://google.com">http://google.com</a>';
+    actual = truncate(input, 33);
+    expect = 'thisare19characters <a href="http://google.com">http://google...</a>';
+    assert.strictEqual(expect, actual);
+  });
 });
