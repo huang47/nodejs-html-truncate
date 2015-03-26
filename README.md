@@ -11,6 +11,7 @@ Given string is expected to be well-formatted HTML.
 
 | Version | Logs |
 |:--|:--|
+| 1.1.0 | bug fixes |
 | 1.0.3 | support browser |
 | 1.0.0 | deprecated: truncateLastWord. Also, exports function directly |
 | 0.3.1 | features done |
