@@ -3,15 +3,17 @@
   "name": "html-truncate",
   "main": "truncate.js",
   "description": "truncate html text and keep tag safe",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/huang47/nodejs-html-truncate.git"
   },
   "scripts": {
+    "prestart": "npm i",
+    "start": "gulp",
     "pretest": "npm i",
-    "test": "./node_modules/mocha/bin/mocha --reporter spec",
-    "postpublish": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "istanbul cover _mocha -- -R spec",
+    "postpublish": "istanbul cover _mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "engines": {
     "node": "*"
@@ -21,9 +23,13 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "browserify": "^9.0.8",
     "coveralls": "^2.11.2",
+    "gulp": "^3.8.11",
+    "istanbul": "^0.3.13",
     "mocha": "*",
     "mocha-lcov-reporter": "0.0.1",
+    "vinyl-source-stream": "^1.1.0",
     "yuidocjs": "*"
   }
 }

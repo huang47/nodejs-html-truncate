@@ -7,14 +7,29 @@ Truncate HTML text and also keep tag safe.
 ## NOTICE
 Given string is expected to be well-formatted HTML.
 
+## TODO
+1. use more robust html parser instead of custom regex
+1. move to es6, probably babel/babelify with decorator if needed.
+
 ## CHANGELOG
 
 | Version | Logs |
 |:--|:--|
+| 1.2.0 | <3 browserify |
 | 1.1.0 | bug fixes |
 | 1.0.3 | support browser |
 | 1.0.0 | deprecated: truncateLastWord. Also, exports function directly |
 | 0.3.1 | features done |
+
+## build parameter
+
+```
+# install prerequisites and build `truncate` library
+npm start
+
+# test, which use travis-ci and coveralls.io to show test results and coverage information
+npm test
+```
 
 ## API
 ```javascript
