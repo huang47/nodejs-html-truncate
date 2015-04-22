@@ -114,7 +114,7 @@ truncate('<p><div>hello world</div></p>', 4, { ellipsis: '' })
 
 
 ## Appendix
-[npm: html-truncate](http://search.npmjs.org/#/html-truncate)
+[npm: html-truncate](https://www.npmjs.com/package/html-truncate)
 
 ## dependencies
 
