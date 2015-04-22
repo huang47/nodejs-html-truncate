@@ -1,9 +1,9 @@
 {
   "author": "huang47 <huge.huang@gmail.com> (http://huang47.blogspot.com)",
   "name": "html-truncate",
-  "main": "truncate.js",
+  "main": "lib/truncate.js",
   "description": "truncate html text and keep tag safe",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/huang47/nodejs-html-truncate.git"
