@@ -1,3 +1,3 @@
-var truncate = require('lib/truncate');
+var truncate = require('./lib/truncate');
 
 module.exports = truncate;
