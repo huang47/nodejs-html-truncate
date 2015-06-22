@@ -1,0 +1,6 @@
+.gitignore
+.npmignore
+.travis.yml
+gulpfile.js
+index.html
+test.js
