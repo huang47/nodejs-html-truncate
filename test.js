@@ -202,4 +202,14 @@ describe('truncate', function() {
     expect = 'thisare19characters <a href="http://google.com">http://google...</a>';
     assert.strictEqual(expect, actual);
   });
+
+  it('should handle attributes with no values', function() {
+    var input, expect, actual;
+
+    input  = 'hello<iframe src="//youtube.com" allowfullscreen></iframe>world';
+    actual = truncate(input, 8);
+    expect = 'hello<iframe src="//youtube.com" allowfullscreen></iframe>wor...';
+    assert.strictEqual(expect, actual);
+  });
+
 });
