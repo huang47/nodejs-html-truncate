@@ -15,6 +15,7 @@ Given string is expected to be well-formatted HTML.
 
 | Version | Logs |
 |:--|:--|
+| 1.2.2 | minor bug fixes |
 | 1.2.0 | <3 browserify |
 | 1.1.0 | bug fixes |
 | 1.0.3 | support browser |

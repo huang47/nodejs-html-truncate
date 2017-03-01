@@ -3,7 +3,7 @@
   "name": "html-truncate",
   "main": "lib/truncate.js",
   "description": "truncate html text and keep tag safe",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "repository": {
     "type": "git",
     "url": "git://github.com/huang47/nodejs-html-truncate.git"
